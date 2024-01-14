@@ -23,7 +23,7 @@ public class StuffController {
 
     private final ChatClient chatClient;
 
-    @Value("classpath:/docs/wikipedia-curling.md")
+    @Value("classpath:/docs/curling-source.txt")
     private Resource docsToStuffResource;
 
     @Value("classpath:/prompts/qa-prompt.st")
