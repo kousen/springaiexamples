@@ -29,7 +29,8 @@ public class PromptTemplateController {
     public Generation completion(@RequestParam(defaultValue = "funny") String adjective,
                                  @RequestParam(defaultValue = "cows") String topic) {
         PromptTemplate promptTemplate = new PromptTemplate(jokeResource);
-        Prompt prompt = promptTemplate.create(Map.of("adjective", adjective, "topic", topic));
+        Prompt prompt = promptTemplate.create(
+                Map.of("adjective", adjective, "topic", topic));
         return chatClient.generate(prompt).getGeneration();
     }
 }

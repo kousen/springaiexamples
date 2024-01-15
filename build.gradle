@@ -20,11 +20,13 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-docker-compose'
+//    implementation 'org.springframework.boot:spring-boot-docker-compose'
     implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:0.8.0-SNAPSHOT'
     implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter:0.8.0-SNAPSHOT'
-    implementation 'org.springframework.ai:spring-ai-chroma-store:0.8.0-SNAPSHOT'
+//    implementation 'org.springframework.ai:spring-ai-chroma-store:0.8.0-SNAPSHOT'
     implementation 'org.springframework.ai:spring-ai-tika-document-reader:0.8.0-SNAPSHOT'
+    implementation 'org.apache.commons:commons-compress:1.25.0'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: "com.vaadin.external.google", module:"android-json"
     }
