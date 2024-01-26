@@ -12,6 +12,8 @@ import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.reader.JsonReader;
+import org.springframework.ai.transformer.splitter.TextSplitter;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +58,12 @@ public class RagService {
             List<Document> documents = jsonReader.get();
             logger.info("Loading JSON as Documents");
 
+            TextSplitter splitter = new TokenTextSplitter();
+            List<Document> splitDocuments = splitter.apply(documents);
+
             // Step 2 - Create embeddings and save to vector store
             logger.info("Creating Embeddings...");
-            vectorStore.add(documents);
+            vectorStore.add(splitDocuments);
             logger.info("Embeddings created.");
             vectorStore.save(bikeVectorStore);
         }
@@ -68,6 +73,7 @@ public class RagService {
         List<Document> similarDocuments = vectorStore.similaritySearch(
                 SearchRequest.query(message).withTopK(4));
         logger.info(String.format("Found %s relevant documents.", similarDocuments.size()));
+
 
         // Step 4 Embed documents into SystemMessage with the `system-qa.st` prompt template
         Message systemMessage = getSystemMessage(similarDocuments);

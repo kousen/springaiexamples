@@ -1,8 +1,6 @@
 package com.kousenit.springaiexamples.stuff;
 
 import com.kousenit.springaiexamples.json.Completion;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -19,7 +17,6 @@ import java.util.Map;
 
 @RestController
 public class StuffController {
-    private static final Logger logger = LoggerFactory.getLogger(StuffController.class);
 
     private final ChatClient chatClient;
 
@@ -43,7 +40,7 @@ public class StuffController {
                 Map.entry("question", message),
                 Map.entry("context", (stuffit ? docsToStuffResource : "")));
         Prompt prompt = promptTemplate.create(map);
-        logger.info("Prompt: {}", prompt);
+        // logger.info("Prompt: {}", prompt);
         ChatResponse aiResponse = chatClient.call(prompt);
         return new Completion(aiResponse.getResult().getOutput().getContent());
     }
