@@ -1,4 +1,4 @@
-package com.kousenit.springaiexamples;
+package com.kousenit.springaiexamples.json;
 
 public record Completion(String completion) {
 }
