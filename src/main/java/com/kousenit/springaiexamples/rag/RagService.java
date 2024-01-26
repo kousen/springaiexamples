@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.Generation;
+import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingClient;
-import org.springframework.ai.prompt.Prompt;
-import org.springframework.ai.prompt.SystemPromptTemplate;
-import org.springframework.ai.prompt.messages.Message;
-import org.springframework.ai.prompt.messages.UserMessage;
 import org.springframework.ai.reader.JsonReader;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
@@ -63,37 +63,24 @@ public class RagService {
             vectorStore.save(bikeVectorStore);
         }
 
-//        JsonReader jsonReader = new JsonReader(bikesResource,
-//                "name", "price", "shortDescription", "description");
-//        List<Document> documents = jsonReader.get();
-//        System.out.printf("Read %d documents%n", documents.size());
-//        // Weird bug throws exception, but still works (keep going)
-//        try {
-//            vectorStore.add(documents);
-//        } catch (Exception e) {
-//            logger.error(e.getMessage());
-//        }
-
         // Step 3 retrieve related documents to query
         logger.info("Retrieving relevant documents");
         List<Document> similarDocuments = vectorStore.similaritySearch(
-                SearchRequest.query(message).withTopK(2));
+                SearchRequest.query(message).withTopK(4));
         logger.info(String.format("Found %s relevant documents.", similarDocuments.size()));
-        similarDocuments.forEach(doc -> System.out.println(doc.getId()));
 
         // Step 4 Embed documents into SystemMessage with the `system-qa.st` prompt template
         Message systemMessage = getSystemMessage(similarDocuments);
         UserMessage userMessage = new UserMessage(message);
 
-        // Step 4 - Ask the AI model
-
+        // Step 5 - Ask the AI model
         logger.info("Asking AI model to reply to question.");
         Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
         logger.info(prompt.toString());
-        ChatResponse response = aiClient.generate(prompt);
+        ChatResponse response = aiClient.call(prompt);
         logger.info("AI responded.");
-        logger.info(response.getGeneration().toString());
-        return response.getGeneration();
+        logger.info(response.getResult().toString());
+        return response.getResult();
     }
 
     private Message getSystemMessage(List<Document> similarDocuments) {

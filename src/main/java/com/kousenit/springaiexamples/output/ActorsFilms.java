@@ -2,4 +2,4 @@ package com.kousenit.springaiexamples.output;
 
 import java.util.List;
 
-public record ActorFilms(String actor, List<String> movies) {}
+public record ActorsFilms(String actor, String[] movies) {}

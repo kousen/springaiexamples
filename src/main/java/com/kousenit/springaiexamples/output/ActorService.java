@@ -2,9 +2,9 @@ package com.kousenit.springaiexamples.output;
 
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.Generation;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.parser.BeanOutputParser;
-import org.springframework.ai.prompt.Prompt;
-import org.springframework.ai.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +19,21 @@ public class ActorService {
         this.chatClient = chatClient;
     }
 
-    public ActorFilms getActorFilms(String actor) {
-        var outputParser = new BeanOutputParser<>(ActorFilms.class);
+    public ActorsFilms getActorFilms(String actor) {
+        var outputParser = new BeanOutputParser<>(ActorsFilms.class);
         String format = outputParser.getFormat();
         String template = """
-				Generate the filmography for the actor {actor}.
+				Generate the filmography for the actor {actor}. In your output,
+				please do NOT include the backticks and json expression, as in
+				```json (and the corresponding close backticks). Just include
 				{format}
 				""";
         PromptTemplate promptTemplate =
                 new PromptTemplate(template, Map.of("actor", actor, "format", format));
         Prompt prompt = new Prompt(promptTemplate.createMessage());
-        Generation generation = chatClient.generate(prompt).getGeneration();
-        System.out.println(generation.getContent());
-        return outputParser.parse(generation.getContent());
+        Generation generation = chatClient.call(prompt).getResult();
+        String content = generation.getOutput().getContent();
+        System.out.println(content);
+        return outputParser.parse(content);
     }
 }

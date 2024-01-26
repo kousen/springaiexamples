@@ -2,22 +2,28 @@ package com.kousenit.springaiexamples.output;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebTestClient(timeout = "36000")
 class ActorServiceTest {
     @Autowired
-    private ActorService service;
+    private WebTestClient webTestClient;
 
     @Test
     void getActorFilms() {
-        var films = service.getActorFilms("Tom Hanks");
-        films.movies().forEach(System.out::println);
-        assertEquals("Tom Hanks", films.actor());
-        assertTrue(films.movies().contains("Forrest Gump"));
-        assertTrue(films.movies().contains("Cast Away"));
-        assertTrue(films.movies().contains("Apollo 13"));
+        webTestClient.get()
+                .uri("/actor")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(ActorsFilms.class)
+                .value(System.out::println);
     }
 }

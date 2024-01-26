@@ -1,12 +1,12 @@
 package com.kousenit.springaiexamples.stuff;
 
-import com.kousenit.springaiexamples.Completion;
+import com.kousenit.springaiexamples.json.Completion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.ChatResponse;
-import org.springframework.ai.prompt.Prompt;
-import org.springframework.ai.prompt.PromptTemplate;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,8 +44,8 @@ public class StuffController {
                 Map.entry("context", (stuffit ? docsToStuffResource : "")));
         Prompt prompt = promptTemplate.create(map);
         logger.info("Prompt: {}", prompt);
-        ChatResponse aiResponse = chatClient.generate(prompt);
-        return new Completion(aiResponse.getGeneration().getContent());
+        ChatResponse aiResponse = chatClient.call(prompt);
+        return new Completion(aiResponse.getResult().getOutput().getContent());
     }
 
 }
