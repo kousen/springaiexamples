@@ -22,6 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:0.8.0-SNAPSHOT'
     implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter:0.8.0-SNAPSHOT'
+    implementation 'org.springframework.ai:spring-ai-huggingface:0.8.0-SNAPSHOT'
     implementation 'org.springframework.ai:spring-ai-tika-document-reader:0.8.0-SNAPSHOT'
     implementation 'org.apache.commons:commons-compress:1.25.0'
 
