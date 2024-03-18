@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.1'
+    id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -17,14 +17,20 @@ repositories {
     maven { url 'https://repo.spring.io/snapshot' }
 }
 
+def springAiVersion = '0.8.1'
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:0.8.0-SNAPSHOT'
-    implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter:0.8.0-SNAPSHOT'
-    implementation 'org.springframework.ai:spring-ai-huggingface:0.8.0-SNAPSHOT'
-    implementation 'org.springframework.ai:spring-ai-tika-document-reader:0.8.0-SNAPSHOT'
-    implementation 'org.apache.commons:commons-compress:1.25.0'
+    implementation "org.springframework.ai:spring-ai-openai-spring-boot-starter:${springAiVersion}"
+    implementation "org.springframework.ai:spring-ai-ollama-spring-boot-starter:${springAiVersion}"
+    implementation "org.springframework.ai:spring-ai-huggingface:${springAiVersion}"
+    implementation "org.springframework.ai:spring-ai-tika-document-reader:${springAiVersion}"
+
+    // Dependencies to make the warnings go away
+    implementation 'org.apache.commons:commons-compress:1.26.1'
+    implementation 'org.apache.james:apache-mime4j-core:0.8.11'
+
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation 'org.springframework.ai:spring-ai-test:0.8.0-SNAPSHOT'

@@ -43,7 +43,7 @@ public class PossService {
 
     @Autowired
     public PossService(@Qualifier("openAiChatClient") ChatClient aiClient,
-                       EmbeddingClient embeddingClient) {
+                       @Qualifier("openAiEmbeddingClient") EmbeddingClient embeddingClient) {
         this.aiClient = aiClient;
         this.embeddingClient = embeddingClient;
     }
@@ -82,6 +82,5 @@ public class PossService {
         SystemPromptTemplate systemPromptTemplate = new SystemPromptTemplate(quizPrompt);
         return systemPromptTemplate.createMessage(
                 Map.of("documents", documents, "topic", message));
-
     }
 }
