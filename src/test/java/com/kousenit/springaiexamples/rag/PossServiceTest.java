@@ -18,7 +18,7 @@ class PossServiceTest {
     void retrieve() {
         Generation generation = service.retrieve(
                 """
-                Please provide several multiple choice questions 
+                Please provide several multiple choice questions
                 about this chapter.""");
         assertNotNull(generation);
         System.out.println(generation);

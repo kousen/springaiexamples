@@ -31,7 +31,6 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.26.1'
     implementation 'org.apache.james:apache-mime4j-core:0.8.11'
 
-
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation 'org.springframework.ai:spring-ai-test:0.8.0-SNAPSHOT'
     testImplementation 'org.junit.platform:junit-platform-launcher'

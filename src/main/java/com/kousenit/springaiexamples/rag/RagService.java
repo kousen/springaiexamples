@@ -40,7 +40,7 @@ public class RagService {
 
     @Autowired
     public RagService(@Qualifier("openAiChatClient") ChatClient aiClient,
-                      EmbeddingClient embeddingClient) {
+                      @Qualifier("openAiEmbeddingClient") EmbeddingClient embeddingClient) {
         this.aiClient = aiClient;
         this.embeddingClient = embeddingClient;
     }

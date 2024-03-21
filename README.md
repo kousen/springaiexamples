@@ -10,9 +10,6 @@ A set of examples for use with the Spring AI project, based on their original Az
 * https://platform.openai.com/docs/overview (OpenAI documentation)
 * https://platform.openai.com/signup (OpenAI signup for key)
 * https://github.com/kousen/OpenAIClient (My GitHub repo)
-*  https://github.com/kousen/springaiexamples (solutions to our exercises)
+* https://github.com/kousen/springaiexamples (solutions to our exercises)
 * https://kenkousen.substack.com (_Tales from the jar side_ newsletter)
 * https://youtube.com/@talesfromthejarside (_Tales from the jar side_ YouTube channel)
-
-
-

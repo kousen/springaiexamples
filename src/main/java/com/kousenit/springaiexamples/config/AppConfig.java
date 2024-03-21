@@ -17,7 +17,7 @@ public class AppConfig {
 
     @Bean
     public RagService ragService(@Qualifier("openAiChatClient") ChatClient chatClient,
-                                 EmbeddingClient embeddingClient) {
+                                 @Qualifier("openAiEmbeddingClient") EmbeddingClient embeddingClient) {
         return new RagService(chatClient, embeddingClient);
     }
 
