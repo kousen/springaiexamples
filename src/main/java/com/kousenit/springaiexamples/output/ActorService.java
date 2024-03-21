@@ -1,7 +1,6 @@
 package com.kousenit.springaiexamples.output;
 
 import org.springframework.ai.chat.ChatClient;
-import org.springframework.ai.chat.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.parser.BeanOutputParser;
@@ -29,10 +28,14 @@ public class ActorService {
 				{format}
 				""";
         PromptTemplate promptTemplate =
-                new PromptTemplate(template, Map.of("actor", actor, "format", format));
+                new PromptTemplate(template,
+                        Map.of("actor", actor, "format", format));
         Prompt prompt = new Prompt(promptTemplate.createMessage());
-        Generation generation = chatClient.call(prompt).getResult();
-        String content = generation.getOutput().getContent();
+        String content =
+                chatClient.call(prompt)
+                        .getResult()
+                        .getOutput()
+                        .getContent();
         System.out.println(content);
         return outputParser.parse(content);
     }

@@ -19,6 +19,7 @@ class ActorServiceTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(ActorsFilms.class)
-                .value(System.out::println);
+                .hasSize(1)
+                .value(filmList -> filmList.forEach(System.out::println));
     }
 }

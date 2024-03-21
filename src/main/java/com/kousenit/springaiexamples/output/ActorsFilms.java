@@ -1,3 +1,5 @@
 package com.kousenit.springaiexamples.output;
 
-public record ActorsFilms(String actor, String[] movies) {}
+import java.util.List;
+
+public record ActorsFilms(String actor, List<String> movies) {}

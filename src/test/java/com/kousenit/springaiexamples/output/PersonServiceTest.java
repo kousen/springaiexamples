@@ -1,5 +1,6 @@
 package com.kousenit.springaiexamples.output;
 
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,7 @@ class PersonServiceTest {
         System.out.println(person);
         assertEquals("Jean-Luc", person.firstName());
         assertEquals("Picard", person.lastName());
-        assertThat(person.dob().getYear()).isBetween(2580, 2320);
+        assertThat(person.dob().getYear()).isCloseTo(2305, Offset.offset(10));
     }
 
 }
