@@ -1,6 +1,5 @@
 package com.kousenit.springaiexamples.config;
 
-import com.kousenit.springaiexamples.functions.ExchangeRateFunction;
 import com.kousenit.springaiexamples.functions.LengthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,11 +34,11 @@ public class AppConfig {
         return new LengthService();
     }
 
-    @Bean
-    @Description("Get the exchange rate between two currencies")
-    public Function<ExchangeRateFunction.Request, ExchangeRateFunction.Response> exchangeRateFunction() {
-        return new ExchangeRateFunction();
-    }
+//    @Bean
+//    @Description("Get the exchange rate between two currencies")
+//    public Function<ExchangeRateFunction.Request, ExchangeRateFunction.Response> exchangeRateFunction() {
+//        return new ExchangeRateFunction();
+//    }
 
 
 //    @Bean

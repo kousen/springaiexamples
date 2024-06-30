@@ -5,6 +5,8 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class Calculator {
 
@@ -15,9 +17,50 @@ public class Calculator {
     }
 
     public String calculateLength(String expression) {
+        String message = """
+                Calculate the length of this expression:
+                "%s"
+                """.formatted(expression);
         return chatClient.prompt()
                 .functions("lengthFunction")
-                .user(expression)
+                .user(message)
+                .call()
+                .content();
+    }
+
+    public String calculateSum(int... ints) {
+        String message = """
+                Calculate the sum of these integers:
+                %s
+                """.formatted(Arrays.toString(ints));
+        return chatClient.prompt()
+                .functions("sumService")
+                .user(message)
+                .call()
+                .content();
+    }
+
+    public String calculateSqrt(double value) {
+        String message = """
+                Calculate the square root of this number:
+                %s
+                """.formatted(value);
+        return chatClient.prompt()
+                .functions("sqrtService")
+                .user(message)
+                .call()
+                .content();
+    }
+
+    public String sqrtSumLengths(String sentence) {
+        String message = """
+                Calculate the square root of the sum
+                of the lengths of the words in this sentence:
+                "%s"
+                """.formatted(sentence);
+        return chatClient.prompt()
+                .functions("lengthFunction", "sumService", "sqrtService")
+                .user(message)
                 .call()
                 .content();
     }

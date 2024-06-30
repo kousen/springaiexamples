@@ -2,28 +2,22 @@ package com.kousenit.springaiexamples.functions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Description;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.http.HttpHeaders;
 
 import java.util.Map;
 import java.util.function.Function;
 
+@Component
+@Description("Get the exchange rate between two currencies")
 public class ExchangeRateFunction implements
         Function<ExchangeRateFunction.Request, ExchangeRateFunction.Response> {
 
     public record Request(double fromAmount, String from, String to) {}
     public record Response(double toAmount) {}
-
-    public record OpenExchangeRatesResponse(
-            String disclaimer,
-            String license,
-            long timestamp,
-            String base,
-            Map<String, Double> rates
-    ) {}
-
-    private static final String API_KEY = System.getenv("OPENEXCHANGERATES_API_KEY");
 
     private final Map<String, Double> rates;
     private final Logger logger = LoggerFactory.getLogger(ExchangeRateFunction.class);
@@ -39,11 +33,21 @@ public class ExchangeRateFunction implements
                 rates.get(request.to) / rates.get(request.from));
     }
 
+    public record OpenExchangeRatesResponse(
+            String disclaimer,
+            String license,
+            long timestamp,
+            String base,
+            Map<String, Double> rates
+    ) {}
+
     // Retrieve the current exchange rates
     private OpenExchangeRatesResponse getLatestRates() {
         RestClient restClient = RestClient.builder()
                 .baseUrl("https://openexchangerates.org")
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Token " + API_KEY)
+                .defaultHeader(HttpHeaders.AUTHORIZATION,
+                        "Token %s".formatted(
+                                System.getenv("OPENEXCHANGERATES_API_KEY")))
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 

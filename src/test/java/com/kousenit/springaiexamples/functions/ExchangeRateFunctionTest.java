@@ -15,6 +15,17 @@ class ExchangeRateFunctionTest {
     @Autowired @Qualifier("openAiChatModel")
     private ChatModel chatModel;
 
+
+    // Typical response (Jun 30, 2024):
+    // Based on the current exchange rates, here are the prices of the MacBook Air in USD:
+    //
+    // - In the UK: 718.25 GBP is approximately 908.77 USD
+    // - In India: 83,900 INR is approximately 1006.39 USD
+    // - In Japan: 177,980 JPY is approximately 1106.26 USD
+    // - In the US: 749.99 USD
+    //
+    // The best deal is to purchase the MacBook Air from the US website at 749.99 USD.
+
     @Test
     public void bestDealMacbookAir() {
         var chatClient = ChatClient.create(chatModel);
