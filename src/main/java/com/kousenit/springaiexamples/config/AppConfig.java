@@ -1,9 +1,14 @@
 package com.kousenit.springaiexamples.config;
 
+import com.kousenit.springaiexamples.functions.ExchangeRateFunction;
+import com.kousenit.springaiexamples.functions.LengthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
 import org.springframework.web.client.RestClient;
+
+import java.util.function.Function;
 
 @Configuration
 public class AppConfig {
@@ -15,7 +20,7 @@ public class AppConfig {
 //    }
 
     @Bean
-    public RestClient restClient(
+    public RestClient openAiRestClient(
             @Value("${spring.ai.openai.chat.base-url}") String baseUrl,
             @Value("${spring.ai.openai.chat.api-key}") String apiKey) {
         return RestClient.builder()
@@ -23,6 +28,19 @@ public class AppConfig {
                 .baseUrl(baseUrl)
                 .build();
     }
+
+    @Bean
+    @Description("Get the length of a string")
+    public Function<LengthService.LengthRequest, LengthService.LengthResponse> lengthFunction() {
+        return new LengthService();
+    }
+
+    @Bean
+    @Description("Get the exchange rate between two currencies")
+    public Function<ExchangeRateFunction.Request, ExchangeRateFunction.Response> exchangeRateFunction() {
+        return new ExchangeRateFunction();
+    }
+
 
 //    @Bean
 //    public ImageClient imageClient(@Value("${spring.ai.openai.chat.api-key}") String apiKey) {

@@ -18,8 +18,7 @@ class ActorServiceTest {
                 .uri("/actor")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(ActorsFilms.class)
-                .hasSize(1)
-                .value(filmList -> filmList.forEach(System.out::println));
+                .expectBody(ActorsFilms.class)
+                .value(actorsFilms -> actorsFilms.movies().forEach(System.out::println));
     }
 }
