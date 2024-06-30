@@ -1,22 +1,19 @@
 version: '3.9'
 
-networks:
-  net:
-    driver: bridge
 services:
-  server:
-    image: ghcr.io/chroma-core/chroma:latest
-    environment:
-      - IS_PERSISTENT=TRUE
+  chroma:
+    image: ghcr.io/chroma-core/chroma:0.4.22
     volumes:
-      # Default configuration for persist_directory in chromadb/config.py
-      # Currently it's located in "/chroma/chroma/"
-      - chroma-data:/chroma/chroma/
+      - index_data:/chroma/chroma
     ports:
       - "8000:8000"
-    networks:
-      - net
+    environment:
+      - ALLOW_RESET=true
+      - ANONYMIZED_TELEMETRY=false
+      - PERSIST_DIRECTORY=/chroma/chroma/persist
+      - IS_PERSISTENT=true
+    command: ["/bin/sh", "-c", "pip install numpy==1.23.5 && pip install chroma-hnswlib==0.7.3 && uvicorn chromadb.app:app --host 0.0.0.0 --port 8000 --workers 1"]
 
 volumes:
-  chroma-data:
+  index_data:
     driver: local
