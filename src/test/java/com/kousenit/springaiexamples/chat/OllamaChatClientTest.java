@@ -1,14 +1,14 @@
 package com.kousenit.springaiexamples.chat;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.ai.ollama.OllamaChatClient;
+import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class OllamaChatClientTest {
     @Autowired
-    private OllamaChatClient client;
+    private OllamaChatModel client;
 
     @Test
     void testChatClient() {

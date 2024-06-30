@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class OpenAiServiceTest {
@@ -39,19 +39,5 @@ class OpenAiServiceTest {
         actorsFilms.movies().stream()
                 .sorted()
                 .forEach(System.out::println);
-    }
-
-    @Test
-    void parsePerson() {
-        String person = service.parsePerson(
-                """
-                        Captain Picard was born in La Barre, France, on Earth
-                        281 years from now. His given name, Jean-Luc, is a
-                        traditional French name. He and his brother Robert were
-                        raised on the family vineyard Chateau Picard.
-                        """
-        );
-        assertNotNull(person);
-        System.out.println(person);
     }
 }
