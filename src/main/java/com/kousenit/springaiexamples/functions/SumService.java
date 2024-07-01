@@ -15,7 +15,7 @@ public class SumService implements Function<SumService.SumRequest, SumService.Su
     public record SumRequest(int... ints) {}
     public record SumResponse(int total) {}
 
-    private final Logger logger = LoggerFactory.getLogger(LengthService.class);
+    private final Logger logger = LoggerFactory.getLogger(SumService.class);
 
     @Override
     public SumResponse apply(SumRequest request) {

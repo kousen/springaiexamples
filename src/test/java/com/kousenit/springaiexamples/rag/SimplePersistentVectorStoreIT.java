@@ -6,6 +6,8 @@ import org.junit.jupiter.api.io.TempDir;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.reader.JsonReader;
+import org.springframework.ai.transformer.splitter.TextSplitter;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,6 +36,10 @@ public class SimplePersistentVectorStoreIT {
 		var jsonReader = new JsonReader(bikesJsonResource,
 				"price", "name", "shortDescription", "description", "tags");
 		List<Document> documents = jsonReader.get();
+
+		TextSplitter textSplitter = new TokenTextSplitter();
+		documents = textSplitter.apply(documents);
+
 		var vectorStore = new SimpleVectorStore(this.embeddingModel);
 		vectorStore.add(documents);
 

@@ -14,7 +14,7 @@ public class SqrtService implements Function<SqrtService.SqrtRequest, SqrtServic
     public record SqrtRequest(double value) {}
     public record SqrtResponse(double squareRoot) {}
 
-    private final Logger logger = LoggerFactory.getLogger(LengthService.class);
+    private final Logger logger = LoggerFactory.getLogger(SqrtService.class);
 
     @Override
     public SqrtResponse apply(SqrtRequest request) {

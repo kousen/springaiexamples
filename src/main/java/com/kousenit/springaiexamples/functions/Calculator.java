@@ -22,7 +22,7 @@ public class Calculator {
                 "%s"
                 """.formatted(expression);
         return chatClient.prompt()
-                .functions("lengthFunction")
+                .functions("lengthService")
                 .user(message)
                 .call()
                 .content();
@@ -59,7 +59,7 @@ public class Calculator {
                 "%s"
                 """.formatted(sentence);
         return chatClient.prompt()
-                .functions("lengthFunction", "sumService", "sqrtService")
+                .functions("lengthService", "sumService", "sqrtService")
                 .user(message)
                 .call()
                 .content();
