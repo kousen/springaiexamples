@@ -34,13 +34,6 @@ public class AppConfig {
 //        return new ExchangeRateFunction();
 //    }
 
-//    @Bean
-//    @Primary
-//    public VectorStore chromaVectorStore(OpenAiEmbeddingModel openAiEmbeddingModel,
-//                                         ChromaApi chromaApi) {
-//        return new ChromaVectorStore(openAiEmbeddingModel, chromaApi, true);
-//    }
-
     // Uncomment this bean to load the documents from the PDF file
 //    @Bean
 //    ApplicationRunner go(VectorStore vectorStore) {

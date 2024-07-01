@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Service
 public class OpenAiService {
@@ -17,7 +18,10 @@ public class OpenAiService {
 
     @Autowired
     public OpenAiService(OpenAiChatModel chatModel) {
-        this.chatClient = ChatClient.builder(chatModel).build();
+        this.chatClient = ChatClient.builder(chatModel)
+                // Add chat memory:
+                // .defaultAdvisors(new PromptChatMemoryAdvisor(new InMemoryChatMemory()))
+                .build();
     }
 
     public ActorsFilms getActorsFilms(String actor) {
@@ -54,6 +58,15 @@ public class OpenAiService {
                         .param("voice", "pirate"))
                 .user(message)
                 .call()
+                .content();
+    }
+
+    // Can't do "entity" for async, so this is more of a demo
+    public Flux<String> getActorFilmsListAsync(String... actors) {
+        String allActors = String.join(", ", actors);
+        return chatClient.prompt()
+                .user("Generate the filmography for " + allActors)
+                .stream()
                 .content();
     }
 

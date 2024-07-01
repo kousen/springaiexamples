@@ -40,4 +40,12 @@ class OpenAiServiceTest {
                 .sorted()
                 .forEach(System.out::println);
     }
+
+    @Test
+    void getActorFilmsListAsync() {
+        service.getActorFilmsListAsync("Margot Robbie", "Tom Hanks")
+                .doOnNext(System.out::print)
+                .blockLast();
+        System.out.println("Done.");
+    }
 }
