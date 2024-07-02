@@ -5,9 +5,12 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @Service
 public class OpenAiService {
@@ -25,20 +28,19 @@ public class OpenAiService {
     }
 
     public ActorsFilms getActorsFilms(String actor) {
-        String userMessage =
-                """
-                Generate the filmography for the actor {actor}.
-                {format}
-                """;
-
         return chatClient.prompt()
-                .user(userSpec -> userSpec.text(userMessage)
-                        .param("actor", actor)
-                        .param("format", "json"))
+                .user(userSpec -> userSpec.text("Generate the filmography for {actor}.")
+                        .param("actor", actor))
                 .call()
                 .entity(ActorsFilms.class);
     }
 
+    public List<String> getFilmsForActor(String actor) {
+        return chatClient.prompt()
+                .user("Generate the filmography for " + actor)
+                .call()
+                .entity(new ParameterizedTypeReference<>() {});
+    }
 
     public String chatWithPromptTemplate(String typeOfJoke, String topic) {
         return chatClient.prompt()

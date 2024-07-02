@@ -29,7 +29,9 @@ dependencies {
     implementation 'org.springframework.ai:spring-ai-chroma-store-spring-boot-starter'
 
     // Testing
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'com.vaadin.external.google', module: 'android-json'
+    }
     testImplementation 'org.springframework.ai:spring-ai-test'
     runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

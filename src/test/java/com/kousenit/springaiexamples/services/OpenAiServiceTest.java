@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
@@ -39,6 +42,14 @@ class OpenAiServiceTest {
         actorsFilms.movies().stream()
                 .sorted()
                 .forEach(System.out::println);
+    }
+
+    @Test
+    void getFilmsForActor() {
+        List<String> films = service.getFilmsForActor("Scarlett Johansson");
+        System.out.println(films);
+        assertThat(films).isNotEmpty()
+                .contains("The Avengers", "Iron Man 2");
     }
 
     @Test
