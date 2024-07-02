@@ -33,15 +33,19 @@ public class RagService {
                         .withSimilarityThreshold(0.5)
                         .withTopK(10));
 
+        // Convert the found documents to a list of strings,
+        // joined together so they can be added to the prompt
         List<String> contentList = similarDocuments.stream()
                 .map(Document::getContent)
                 .toList();
         System.out.printf("Found %d similar documents.%n", contentList.size());
+        String documentsAsString = String.join(System.lineSeparator(), contentList);
 
+        // Prompt the user with the question and the found documents
         return chatClient.prompt()
                 .user(userSpec -> userSpec.text(ragPromptResource)
                         .param("input", question)
-                        .param("documents", String.join(System.lineSeparator(), contentList)))
+                        .param("documents", documentsAsString))
                 .call()
                 .content();
     }
