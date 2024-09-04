@@ -2,7 +2,7 @@ package com.kousenit.springaiexamples.output;
 
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.PromptTemplate;
-import org.springframework.ai.parser.BeanOutputParser;
+import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class PersonService {
     }
 
     public Person retrievePerson(String text) {
-        var parser = new BeanOutputParser<>(Person.class);
+        var parser = new BeanOutputConverter<>(Person.class);
 
         String template = """
                 Extract a Person instance from the given {text} using the {format}
@@ -34,6 +34,6 @@ public class PersonService {
         String content = chatModel.call(promptTemplate.create())
                 .getResult().getOutput().getContent();
         System.out.println(content);
-        return parser.parse(content);
+        return parser.convert(content);
     }
 }

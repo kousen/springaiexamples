@@ -32,11 +32,13 @@ public class OpenAIChatClientTest {
 
     @Test
     void listOutputConverterString() {
-        List<String> collection = ChatClient.create(chatModel).prompt()
+        List<String> collection = ChatClient.create(chatModel)
+                .prompt()
                 .user(u -> u.text("List five {subject}")
                         .param("subject", "ice cream flavors"))
                 .call()
-                .entity(new ParameterizedTypeReference<>() {});
+                .entity(new ParameterizedTypeReference<>() {
+                });
 
         assertThat(collection).hasSize(5);
         collection.forEach(System.out::println);
@@ -44,7 +46,8 @@ public class OpenAIChatClientTest {
 
     @Test
     void visionTest() {
-        String response = ChatClient.create(chatModel).prompt()
+        String response = ChatClient.create(chatModel)
+                .prompt()
                 .user(u -> u.text("What do you see in this image?")
                         .media(MimeTypeUtils.IMAGE_JPEG, skynetImage))
                 .call()
