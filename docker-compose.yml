@@ -1,19 +1,19 @@
 version: '3.9'
-
+networks:
+  net:
+    driver: bridge
 services:
-  chroma:
-    image: ghcr.io/chroma-core/chroma:0.4.22
+  server:
+    image: ghcr.io/chroma-core/chroma:0.5.6.dev75
+    environment:
+      - IS_PERSISTENT=TRUE
     volumes:
-      - index_data:/chroma/chroma
+      - chroma-data:/chroma/chroma/
     ports:
       - "8000:8000"
-    environment:
-      - ALLOW_RESET=true
-      - ANONYMIZED_TELEMETRY=false
-      - PERSIST_DIRECTORY=/chroma/chroma/persist
-      - IS_PERSISTENT=true
-    command: ["/bin/sh", "-c", "pip install numpy==1.23.5 && pip install chroma-hnswlib==0.7.3 && uvicorn chromadb.app:app --host 0.0.0.0 --port 8000 --workers 1"]
-
+    networks:
+      - net
+    command: ["/bin/sh", "-c", "pip install numpy==1.26.3 && pip install chroma-hnswlib==0.7.3 && uvicorn chromadb.app:app --host 0.0.0.0 --port 8000 --workers 1"]
 volumes:
-  index_data:
+  chroma-data:
     driver: local
