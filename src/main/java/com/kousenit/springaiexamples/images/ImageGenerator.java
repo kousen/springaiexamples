@@ -1,5 +1,6 @@
 package com.kousenit.springaiexamples.images;
 
+
 import org.springframework.ai.image.ImageOptionsBuilder;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
