@@ -7,9 +7,9 @@ import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.cloud.function.context.config.RoutingFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
@@ -22,8 +22,8 @@ public class AppConfig {
     Resource documentResource;
 
     // Uncomment this bean to load the documents from the PDF file
-    @Bean
-    ApplicationRunner go(VectorStore vectorStore, RoutingFunction functionRouter) {
+    @Bean @Profile("rag")
+    ApplicationRunner go(VectorStore vectorStore) {
         return args -> {
             System.out.println("Loading documents from PDF file into " +
                                vectorStore.getClass().getSimpleName());
