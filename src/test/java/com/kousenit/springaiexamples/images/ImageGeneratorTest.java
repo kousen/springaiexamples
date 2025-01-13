@@ -10,10 +10,14 @@ class ImageGeneratorTest {
     @Autowired
     private ImageGenerator imageGenerator;
 
-    @Test  // Always times out. Don't know how to fix that yet
+    @Test
     void generateImage() {
         ImageResponse response = imageGenerator.generate(
-                "A beautiful sunset over the ocean");
+                """
+                        A warrior cat rides a dragon
+                        into battle against a horde of
+                        zombies in a post-apocalyptic world.
+                        """);
         System.out.println(response.getResult().getOutput());
         System.out.println(response);
     }

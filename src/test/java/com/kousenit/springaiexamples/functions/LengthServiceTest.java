@@ -2,6 +2,7 @@ package com.kousenit.springaiexamples.functions;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,7 @@ class LengthServiceTest {
     @Test
     void testLengthService() {
         String response = ChatClient.create(chatModel).prompt()
+                .advisors(new SimpleLoggerAdvisor())
                 .functions("lengthService")
                 .user("Calculate the length of this expression: 'Hello, world!'")
                 .call()
