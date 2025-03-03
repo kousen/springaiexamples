@@ -29,7 +29,8 @@ public class OpenAiService {
 
     public ActorsFilms getActorsFilms(String actor) {
         return chatClient.prompt()
-                .user(userSpec -> userSpec.text("Generate the filmography for {actor}.")
+                .user(userSpec -> userSpec
+                        .text("Generate the filmography for {actor}.")
                         .param("actor", actor))
                 .call()
                 .entity(ActorsFilms.class);

@@ -33,6 +33,7 @@ public class OpenAIChatClientTest {
     void testChatClient() {
         String question = "Why is the sky blue?";
         String answer = chatModel.call(question);
+        System.out.println(answer);
 
         var evaluator = new RelevancyEvaluator(ChatClient.builder(chatModel));
         var request = new EvaluationRequest(question, List.of(), answer);
@@ -59,7 +60,15 @@ public class OpenAIChatClientTest {
     void visionTest() {
         String response = ChatClient.create(chatModel)
                 .prompt()
-                .user(u -> u.text("What do you see in this image?")
+                .user(u -> u.text("""
+                                My boss wants me to embed
+                                an AI model into this robot,
+                                which my company (identified
+                                by the logo in the picture)
+                                is planning to build.
+                                
+                                What could go wrong?
+                                """)
                         .media(MimeTypeUtils.IMAGE_JPEG, skynetImage))
                 .call()
                 .content();
