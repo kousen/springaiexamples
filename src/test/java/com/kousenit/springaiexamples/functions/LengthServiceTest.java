@@ -19,7 +19,7 @@ class LengthServiceTest {
     void testLengthService() {
         String response = ChatClient.create(chatModel).prompt()
                 .advisors(new SimpleLoggerAdvisor())
-                .functions("lengthService")
+                .tools(new Tools())
                 .user("Calculate the length of this expression: 'Hello, world!'")
                 .call()
                 .content();

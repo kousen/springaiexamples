@@ -1,9 +1,12 @@
 package com.kousenit.springaiexamples.config;
 
 import org.springframework.ai.document.Document;
+import org.springframework.ai.openai.OpenAiEmbeddingModel;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TextSplitter;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
+import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
@@ -21,7 +24,7 @@ public class AppConfig {
     @Value("classpath:/pdfs/Model_3_Owners_Manual.pdf")
     Resource documentResource;
 
-    // Uncomment this bean to load the documents from the PDF file
+    // Enable this bean to load the documents from the PDF file
     @Bean @Profile("rag")
     ApplicationRunner go(VectorStore vectorStore) {
         return args -> {
@@ -34,6 +37,15 @@ public class AppConfig {
             System.out.println("Adding " + splitDocuments.size() + " documents to vector store");
             vectorStore.add(splitDocuments);
         };
+    }
+
+    @Bean
+    VectorStore vectorStore() {
+        var embeddingModel = new OpenAiEmbeddingModel(
+                OpenAiApi.builder()
+                        .apiKey(System.getenv("OPENAI_API_KEY"))
+                        .build());
+        return SimpleVectorStore.builder(embeddingModel).build();
     }
 
     @Bean

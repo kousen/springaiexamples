@@ -1,0 +1,19 @@
+Topics:
+- Models
+- Chat
+    - Synchronous vs Streaming
+    - Messages
+    - Prompts and Prompt Templates
+    - Structured Outputs
+    - Advisors
+    - Chat memory
+- Function calling / Tool support
+    - MCP
+- Image generation
+- Multimodal
+    - Vision
+    - Audio
+- Your own data
+    - Prompt stuffing
+    - RAG
+    - Vector databases

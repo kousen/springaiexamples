@@ -32,7 +32,7 @@ public class PersonService {
         PromptTemplate promptTemplate = new PromptTemplate(template,
                 Map.of("text", text, "format", parser.getFormat()));
         String content = chatModel.call(promptTemplate.create())
-                .getResult().getOutput().getContent();
+                .getResult().getOutput().getText();
         System.out.println(content);
         return parser.convert(content);
     }
