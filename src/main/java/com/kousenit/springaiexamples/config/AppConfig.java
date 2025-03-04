@@ -1,8 +1,7 @@
 package com.kousenit.springaiexamples.config;
 
 import org.springframework.ai.document.Document;
-import org.springframework.ai.openai.OpenAiEmbeddingModel;
-import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TextSplitter;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
@@ -40,11 +39,11 @@ public class AppConfig {
     }
 
     @Bean
-    VectorStore vectorStore() {
-        var embeddingModel = new OpenAiEmbeddingModel(
-                OpenAiApi.builder()
-                        .apiKey(System.getenv("OPENAI_API_KEY"))
-                        .build());
+    VectorStore vectorStore(EmbeddingModel embeddingModel) {
+//        var embeddingModel = new OpenAiEmbeddingModel(
+//                OpenAiApi.builder()
+//                        .apiKey(System.getenv("OPENAI_API_KEY"))
+//                        .build());
         return SimpleVectorStore.builder(embeddingModel).build();
     }
 
