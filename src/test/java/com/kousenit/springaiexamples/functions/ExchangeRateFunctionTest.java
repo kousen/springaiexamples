@@ -36,7 +36,7 @@ class ExchangeRateFunctionTest {
                 Which is the best deal?
                 """;
         String answer = chatClient.prompt()
-                .functions("exchangeRateFunction")
+                .tools("exchangeRateFunction")
                 .user(question)
                 .call()
                 .content();

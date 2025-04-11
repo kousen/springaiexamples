@@ -32,10 +32,6 @@ dependencies {
     }
     testImplementation 'org.springframework.ai:spring-ai-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    // Dependencies to make the warnings go away
-    implementation 'org.apache.commons:commons-compress:1.26.1'
-    implementation 'org.apache.james:apache-mime4j-core:0.8.11'
 }
 
 dependencyManagement {
