@@ -49,7 +49,7 @@ class OpenAiServiceTest {
         List<String> films = service.getFilmsForActor("Scarlett Johansson");
         System.out.println(films);
         assertThat(films).isNotEmpty()
-                .contains("The Avengers", "Iron Man 2");
+                .contains("The Avengers (2012)", "Iron Man 2 (2010)");
     }
 
     @Test
