@@ -39,4 +39,9 @@ dependencyManagement {
 
 tasks.named('test', Test) {
     useJUnitPlatform()
+    jvmArgs += ['-Xshare:off']
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += ['-Xshare:off']
 }
