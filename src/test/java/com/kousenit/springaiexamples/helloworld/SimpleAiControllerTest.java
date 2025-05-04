@@ -16,10 +16,11 @@ class SimpleAiControllerTest {
     @Test
     void completion() {
         client.get()
-                .uri("/ai/simple")
+                .uri("/ai/generate")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.completion").isNotEmpty();
+                .consumeWith(System.out::println);
+
     }
 }

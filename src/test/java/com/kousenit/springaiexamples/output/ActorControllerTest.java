@@ -18,7 +18,7 @@ class ActorControllerTest {
                 .uri("/actor")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(ActorsFilms.class)
+                .expectBodyList(String.class)
                 .value(System.out::println);
     }
 

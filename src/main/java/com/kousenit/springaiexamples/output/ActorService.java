@@ -26,6 +26,7 @@ public class ActorService {
                 .call()
                 .entity(ActorsFilms.class);
         System.out.println("Films for " + actor + ":");
+        assert actorsFilms != null;
         actorsFilms.movies().forEach(System.out::println);
         return actorsFilms;
     }
