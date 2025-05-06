@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StuffService {
 
-    @Value("file:src/main/resources/docs/wikipedia-curling.md")
+    @Value("classpath:docs/wikipedia-curling.md")
     private Resource curlingResource;
 
     private final ChatClient chatClient;
