@@ -1,9 +1,12 @@
 package com.kousenit.springaiexamples.chat;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.evaluation.RelevancyEvaluator;
+import org.springframework.ai.chat.metadata.ChatResponseMetadata;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.ai.evaluation.EvaluationResponse;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -38,6 +41,21 @@ public class OpenAIChatClientTest {
         var request = new EvaluationRequest(question, List.of(), answer);
         EvaluationResponse response = evaluator.evaluate(request);
         System.out.println(response);
+    }
+
+    @Test
+    void testChatClientWithPrompt() {
+        String question = "Why is the sky blue?";
+        ChatResponse response = ChatClient.create(chatModel)
+                .prompt()
+                .user(u -> u.text(question))
+                .call()
+                .chatResponse();
+        Assertions.assertNotNull(response);
+        ChatResponseMetadata metadata = response.getMetadata();
+        System.out.println("Model: " + metadata.getModel());
+        System.out.println("Usage: " + metadata.getUsage());
+        System.out.println(response.getResult());
     }
 
     @Test
