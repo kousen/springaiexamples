@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.Resource;
 import org.springframework.util.MimeTypeUtils;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -56,6 +57,18 @@ public class OpenAIChatClientTest {
         System.out.println("Model: " + metadata.getModel());
         System.out.println("Usage: " + metadata.getUsage());
         System.out.println(response.getResult());
+    }
+
+    @Test
+    void testChatClientWithStreamingPrompt() {
+        String question = "Why is the sky blue?";
+        Flux<String> content = ChatClient.create(chatModel)
+                .prompt()
+                .user(u -> u.text(question))
+                .stream()
+                .content();
+        content.doOnNext(System.out::println)
+                .blockLast();
     }
 
     @Test
